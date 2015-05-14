@@ -1,3 +1,7 @@
+0.1.5 ()
+=====
+* Fix some warnings and deprecated calls.
+
 0.1.4 (17-12-2013)
 =====
 * Rename errno to errnum in order to build on Hurd (thanks Pino Toscano).

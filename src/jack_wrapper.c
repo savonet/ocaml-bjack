@@ -1166,19 +1166,20 @@ JACK_Open(jack_driver_t *drv, unsigned int bits_per_channel,
 
   int periodSize = jack_get_buffer_size(drv->client);
   int periods = 0;
+  jack_latency_range_t range;
   /* FIXME: maybe we should keep different latency values for input vs output? */
   if(drv->num_output_channels > 0)
   {
-    periods = jack_port_get_total_latency(drv->client,
-                                          drv->output_port[0]) / periodSize;
+    jack_port_get_latency_range(drv->output_port[0], JackPlaybackLatency, &range);
+    periods = range.max / periodSize;
     drv->latencyMS = periodSize * periods * 1000 / (drv->jack_sample_rate *
                                                     (drv->bits_per_channel / 8 *
                                                      drv->num_output_channels));
   }
   else if(drv->num_input_channels > 0)
   {
-    periods = jack_port_get_total_latency(drv->client,
-                                          drv->input_port[0]) / periodSize;
+    jack_port_get_latency_range(drv->input_port[0], JackCaptureLatency, &range);
+    periods = range.max / periodSize;
     drv->latencyMS =
       periodSize * periods * 1000 / (drv->jack_sample_rate *
                                      (drv->bits_per_channel / 8 *
@@ -1694,7 +1695,9 @@ JACK_GetPosition(jack_driver_t * drv, enum pos_enum position,
   long elapsedMS;
   double sec2msFactor = 1000;
 
+#if TRACE_ENABLE 
   char *type_str = "UNKNOWN type";
+#endif
 
   /* if we are reset we should return a position of 0 */
   if(drv->state == RESET)
@@ -1705,15 +1708,21 @@ JACK_GetPosition(jack_driver_t * drv, enum pos_enum position,
 
   if(type == WRITTEN)
   {
+#if TRACE_ENABLE
     type_str = "WRITTEN";
+#endif
     return_val = drv->client_bytes;
   } else if(type == WRITTEN_TO_JACK)
   {
+#if TRACE_ENABLE
     type_str = "WRITTEN_TO_JACK";
+#endif
     return_val = drv->written_client_bytes;
   } else if(type == PLAYED)       /* account for the elapsed time for the played_bytes */
   {
+#if TRACE_ENABLE
     type_str = "PLAYED";
+#endif
     return_val = drv->played_client_bytes;
     gettimeofday(&now, 0);
 
@@ -1753,8 +1762,10 @@ JACK_GetPosition(jack_driver_t * drv, enum pos_enum position,
     }
   }
 
+#if TRACE_ENABLE
   TRACE("drv->client %s, type(%s), return_val = %ld\n", drv->client_name,
         type_str, return_val);
+#endif
   return return_val;
 }
 
@@ -1919,9 +1930,12 @@ long
 JACK_GetJackOutputLatency(jack_driver_t *drv)
 {
   long return_val = 0;
+  jack_latency_range_t range; 
 
-  if(drv->client && drv->num_output_channels)
-    return_val = jack_port_get_total_latency(drv->client, drv->output_port[0]);
+  if(drv->client && drv->num_output_channels) {
+    jack_port_get_latency_range(drv->output_port[0], JackPlaybackLatency, &range);
+    return_val = range.max;
+  }
 
   TRACE("got latency of %ld frames\n", return_val);
 
@@ -1933,9 +1947,12 @@ long
 JACK_GetJackInputLatency(jack_driver_t *drv)
 {
   long return_val = 0;
+  jack_latency_range_t range;
 
-  if(drv->client && drv->num_input_channels)
-    return_val = jack_port_get_total_latency(drv->client, drv->input_port[0]);
+  if(drv->client && drv->num_input_channels) {
+    jack_port_get_latency_range(drv->input_port[0], JackCaptureLatency, &range);
+    return_val = range.max;
+  }
 
   TRACE("got latency of %ld frames\n", return_val);
 

@@ -136,8 +136,6 @@ val set_channel_volume : channel:int -> device:t -> int -> unit
 
 val get_channel_volume : t -> int -> int
 
-val get_channel_volume : t -> int -> int
-
 val get_output_bytes_per_second : t -> int
 
 val get_input_bytes_per_second : t -> int

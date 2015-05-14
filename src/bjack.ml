@@ -196,11 +196,11 @@ type volume =
 
 let int_of_volume v = 
   let f = private_value_int in
-  match v with
+  match (v:volume) with
     | Linear -> f "linear"
     | Decibel -> f "dbAttenuation"
 
-let volume_of_int n = 
+let volume_of_int n : volume =
   let f = private_value_int in
   match n with
     | e when e = f "linear" -> Linear
