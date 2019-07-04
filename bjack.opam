@@ -1,4 +1,5 @@
 opam-version: "2.0"
+name: "bjack"
 version: "0.1.5"
 maintainer: "Romain Beauxis <toots@rastageeks.org>"
 authors: "The Savonet Team <savonet-users@lists.sourceforge.net>"
