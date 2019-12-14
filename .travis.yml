@@ -4,9 +4,10 @@ addons:
     packages:
     - ocaml-nox
     - ocaml-findlib
+    - libjack-jackd2-dev
+    - libsamplerate0-dev
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libjack-jackd2-dev libsamplerate0-dev
-
-script: ./bootstrap && ./configure && make
+script:
+  - ./bootstrap
+  - ./configure
+  - make
