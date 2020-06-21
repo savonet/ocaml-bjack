@@ -21,8 +21,7 @@ depexts: [
   ["jack-dev"] {os-distribution = "alpine"}
   ["libjack-dev" "libsamplerate0-dev"] {os-distribution = "debian"}
   ["libjack-dev" "libsamplerate0-dev"] {os-distribution = "ubuntu"}
-  ["jack" "drfill/liquidsoap/ocaml-bjack"]
-    {os = "macos" & os-distribution = "homebrew"}
+  ["jack"] {os = "macos" & os-distribution = "homebrew"}
 ]
 bug-reports: "https://github.com/savonet/ocaml-bjack/issues"
 dev-repo: "git+https://github.com/savonet/ocaml-bjack.git"
