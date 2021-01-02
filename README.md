@@ -9,18 +9,18 @@ Please read the COPYING file before using this software.
 Prerequisites:
 ==============
 
-- ocaml >= 3.10.1 (haven't tried earlier versions)
+- ocaml
 
-- jack audio connection kit >= 0.109.2 (haven't tried earlier versions)
+- jack audio connection kit
 
-- samplerate >= 0.1.3 (haven't tried earlier versions)
-
-- findlib >= 0.8.1 (haven't tried earlier versions)
+- dune >= 2.0
 
 Compilation:
 ============
 
-	$ make all
+```
+$ dune build
+```
 
 This should build both the native and the byte-code version of the
 extension library.
@@ -28,10 +28,16 @@ extension library.
 Installation:
 =============
 
-	$ make install
+Via `opam`:
 
-This should install the library file (using ocamlfind) in the
-appropriate place.
+```
+$ opam install mad
+```
+
+Via `dune` (for developers):
+```
+$ dune install
+```
 
 Author:
 =======
