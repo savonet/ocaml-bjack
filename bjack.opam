@@ -11,6 +11,7 @@ bug-reports: "https://github.com/savonet/ocaml-bjack/issues"
 depends: [
   "dune" {>= "2.0"}
   "dune-configurator"
+  "conf-pkg-config"
   "conf-bjack"
 ]
 build: [

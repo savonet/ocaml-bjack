@@ -14,5 +14,6 @@
  (depends
   (dune (>= 2.0))
   dune-configurator
+  conf-pkg-config
   conf-bjack)
 )
