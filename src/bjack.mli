@@ -31,7 +31,6 @@
  *
  *)
 
-
 (* @author Romain Beauxis *)
 
 (** Ocaml blocking API to jack audio connection kit *)
@@ -42,7 +41,7 @@
 type t
 
 (** Various possible samplerate converters *)
-type converter = 
+type converter =
   | Best_quality
   | Medium_quality
   | Fastest
@@ -62,21 +61,22 @@ exception Port_name_input_channel_mismatch
 val set_conversion_function : converter -> unit
 
 (** Various jack port options *)
-type port_flag = 
-  | Input 
-  | Output 
-  | Physical 
-  | Monitor 
-  | Terminal
+type port_flag = Input | Output | Physical | Monitor | Terminal
 
 (** {2 Blocking API } *)
 
 (** Open a Bjack device *)
-val open_t : ?ringbuffer_size:int -> ?server_name:string -> 
-               rate:int -> bits_per_sample:int -> 
-               input_channels:int -> output_channels:int -> 
-               flags:(port_flag list) -> client_name:string -> 
-               unit -> t
+val open_t :
+  ?ringbuffer_size:int ->
+  ?server_name:string ->
+  rate:int ->
+  bits_per_sample:int ->
+  input_channels:int ->
+  output_channels:int ->
+  flags:port_flag list ->
+  client_name:string ->
+  unit ->
+  t
 
 (** Close a Bjack device *)
 val close : t -> unit
@@ -99,60 +99,34 @@ val reset : t -> unit
 type position_unit = Bytes | Milliseconds
 type position_type = Played | Written_to_jack | Written
 
-val get_position : position_unit:position_unit -> position_type:position_type -> t -> int
+val get_position :
+  position_unit:position_unit -> position_type:position_type -> t -> int
 
 val set_position : position_unit:position_unit -> t -> int -> unit
-
 val get_output_latency : t -> int
-
 val get_input_latency : t -> int
 
-type playing_state = 
-  | Playing
-  | Paused
-  | Stopped
-  | Closed
-  | Reset
+type playing_state = Playing | Paused | Stopped | Closed | Reset
 
 val set_state : t -> playing_state -> unit
-
 val get_state : t -> playing_state
-
 val get_max_output_buffered_bytes : t -> int
-
 val get_max_input_buffered_bytes : t -> int
-
 val get_jack_buffered_bytes : t -> int
 
-type volume = 
-  | Linear
-  | Decibel
+type volume = Linear | Decibel
 
 val set_volume_effect_type : t -> volume -> volume
-
 val set_all_volume : t -> int -> unit
-
 val set_channel_volume : channel:int -> device:t -> int -> unit
-
 val get_channel_volume : t -> int -> int
-
 val get_output_bytes_per_second : t -> int
-
 val get_input_bytes_per_second : t -> int
-
 val get_bytes_stored : t -> int
-
 val get_bytes_free_space : t -> int
-
 val get_bytes_used_space : t -> int
-
 val get_bytes_per_output_frame : t -> int
-
 val get_bytes_per_input_frame : t -> int
-
 val get_num_output_channels : t -> int
-
 val get_num_input_channels : t -> int
-
 val get_sample_rate : t -> int
-
