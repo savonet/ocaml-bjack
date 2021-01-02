@@ -11,6 +11,7 @@ bug-reports: "https://github.com/savonet/ocaml-bjack/issues"
 depends: [
   "dune" {>= "2.0"}
   "dune-configurator"
+  "conf-bjack"
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -27,9 +28,3 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/savonet/ocaml-bjack.git"
-depexts: [
-  ["jack-dev"] {os-distribution = "alpine"}
-  ["libjack-dev" "libsamplerate0-dev"] {os-distribution = "debian"}
-  ["libjack-dev" "libsamplerate0-dev"] {os-distribution = "ubuntu"}
-  ["jack"] {os = "macos" & os-distribution = "homebrew"}
-]
