@@ -81,7 +81,7 @@ static value caml_bjack_handle_error(int errnum) {
 
 CAMLprim value caml_bjack_priv_value_int(value name) {
   CAMLparam1(name);
-  char *s = String_val(name);
+  const char *s = String_val(name);
   if (!strcmp(s, "PLAYED"))
     CAMLreturn(Val_int(PLAYED));
   if (!strcmp(s, "WRITTEN_TO_JACK"))
