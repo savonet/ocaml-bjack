@@ -214,12 +214,15 @@ CAMLprim value caml_bjack_read(value device, value len) {
     ret = JACK_Read(drv, (unsigned char *)buf, n);
     caml_leave_blocking_section();
   } else {
+    free(buf);
     caml_raise_constant(
         *caml_named_value("bio2jack_exn_too_many_input_channels"));
   }
 
-  if (ret < 0)
+  if (ret < 0) {
+    free(buf);
     caml_failwith("jack_read");
+  }
 
   ans = caml_alloc_string(ret);
   memcpy(String_val(ans), buf, ret);
