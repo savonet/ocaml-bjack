@@ -1,6 +1,7 @@
 0.1.7 (unreleased)
 =====
 - Remove LGPL linking exception (#2).
+- Fix memory leak on read errors.
 
 0.1.6 (2021-01-02)
 ======
